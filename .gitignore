@@ -1,0 +1,25 @@
+# Build output
+target/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Maven / Java
+*.class
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker / local env
+.env
+.env.*
+!.env.example
+
+# NetBeans / project metadata that should usually stay local
+nbactions.xml
+nb-configuration.xml

@@ -1,0 +1,47 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fuhf-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+      MSSQL_TCP_PORT: 1433
+    ports:
+      - "14330:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fuhf-app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 1433
+      DB_NAME: FUHF2
+      DB_USER: sa
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ENCRYPT: "false"
+      DB_AUTO_INIT: "true"
+      DB_INIT_SCRIPT_PATH: /opt/tomcat/fuhf-sqlserver.sql
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_REDIRECT_URI: http://localhost:8080/HFManagementSystem/checkgmail
+      VNPAY_TMN_CODE: ${VNPAY_TMN_CODE}
+      VNPAY_SECRET_KEY: ${VNPAY_SECRET_KEY}
+      VNPAY_PAY_URL: ${VNPAY_PAY_URL}
+      VNPAY_RETURN_URL: http://localhost:8080/HFManagementSystem/result
+      VNPAY_API_URL: ${VNPAY_API_URL}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  mssql_data:
