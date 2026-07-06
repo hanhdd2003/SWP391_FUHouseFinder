@@ -172,7 +172,7 @@ public class UserDAO extends DBContext implements IUser {
                 return p;
             }
         } catch (SQLException e) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, "Failed to load email by MD5", e);
         } finally {
             closeResultSet(rs);
             closeStatement(stm);
@@ -269,7 +269,7 @@ public class UserDAO extends DBContext implements IUser {
                 return rs.getString("salt");
             }
         } catch (SQLException e) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, "Failed to load email by MD5", e);
         } finally {
             closeResultSet(rs);
             closeStatement(stm);
@@ -293,7 +293,7 @@ public class UserDAO extends DBContext implements IUser {
                 return rs.getString("hashed_password");
             }
         } catch (SQLException e) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, "Failed to resolve email from MD5", e);
         } finally {
             closeResultSet(rs);
             closeStatement(stm);
@@ -317,7 +317,7 @@ public class UserDAO extends DBContext implements IUser {
                 return true;
             }
         } catch (SQLException e) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, "Failed to resolve email by MD5", e);
         } finally {
             closeResultSet(rs);
             closeStatement(stm);
@@ -824,7 +824,7 @@ public class UserDAO extends DBContext implements IUser {
                 }
             }
         } catch (SQLException e) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, "Failed to resolve email by MD5", e);
         } finally {
             closeResultSet(rs);
             closeStatement(stm);
